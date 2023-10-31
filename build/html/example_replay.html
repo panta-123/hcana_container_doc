@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example &mdash; hcana container 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Apptainer/Singularity Setup" href="singularity_setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            hcana container
+              <img src="_static/JLab.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="container.html">What is Container ?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcana_container.html">Hall C Analyzer (hcana) Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_setup.html">Docker/Podman Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_setup.html">Apptainer/Singularity Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apptainer">Apptainer</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hcana container</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example_replay.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example">
+<span id="example-replay"></span><h1>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h1>
+<p>To use the hcana container for replay or any other analysis, its no different than using your own build hcana.</p>
+<p>Lets see it via a example. The official <code class="docutils literal notranslate"><span class="pre">hcana</span></code> repo (<a class="reference external" href="https://github.com/JeffersonLab/hcana/tree/develop">here</a>) provides a example file <code class="docutils literal notranslate"><span class="pre">hodtest.C</span></code> in <code class="docutils literal notranslate"><span class="pre">examples</span></code> subdirectory, where it decods hits.</p>
+<p>In your local system or ifarm git clone the <a class="reference external" href="https://github.com/JeffersonLab/hcana/tree/develop">hcana</a> repo.
+Download the file <a class="reference external" href="https://userweb.jlab.org/~saw/software/daq04_50017.log.0.gz">daq04_50017.log.0.gz</a> and place it in tthe <code class="docutils literal notranslate"><span class="pre">examples</span></code> subdirectory.
+Then uncompress the data file as:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>gunzip<span class="w"> </span>daq04_50017.log.0.gz
+</pre></div>
+</div>
+<p>If you want to use a different data file, edit the “THaRun” line in file <code class="docutils literal notranslate"><span class="pre">hodtest.C</span></code> to point to the run file name.</p>
+<p>Lets explore both docker and apptainer to run the example.</p>
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
+<p>If you have a hcana docker container running. You can copy the daq04_50017.log.0.gz into the docker container using</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>cp<span class="w"> </span>/your/directory/to/daq04_50017.log.0.gz<span class="w"> </span>hcana:/hcana-hcana-0.98/examples/
+</pre></div>
+</div>
+<p>Now got to the docker container shell as:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>hcana<span class="w"> </span>bash
+</pre></div>
+</div>
+<p>Go into the example directory as <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/hcana-hcana-0.98/examples/</span></code> and run following commands</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>hcana
+$<span class="w"> </span>.x<span class="w"> </span>hodtest.C
+</pre></div>
+</div>
+<p>Running this script will create a root file, “hodtest.root.” The contents of this file are controled by “output.def”.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>.x<span class="w"> </span>hitmaps_hms.C
+</pre></div>
+</div>
+</section>
+<section id="apptainer">
+<h2>Apptainer<a class="headerlink" href="#apptainer" title="Link to this heading"></a></h2>
+<p>Go to the shell of the hcana apptainer as:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>shell<span class="w"> </span>--cleanenv<span class="w"> </span>hcana-0.98.sif
+</pre></div>
+</div>
+<p>If your hcana repo is in home directory then it will be available in apptainer, if in other place you can use <code class="docutils literal notranslate"><span class="pre">--bind</span></code> option of apptainer.
+Now got into the <code class="docutils literal notranslate"><span class="pre">examples</span></code> subdirectory of hcana repo in the apptainer shell.
+In the shell run <code class="docutils literal notranslate"><span class="pre">hcana</span></code> which will take you to the hcana command prompt.
+You should see <code class="docutils literal notranslate"><span class="pre">hcana</span> <span class="pre">[0]</span></code> in the shell.</p>
+<p>Now run the following command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>.x<span class="w"> </span>hodtest.C
+</pre></div>
+</div>
+<p>Running this script will create a root file, “hodtest.root.” The contents of this file are controled by “output.def”.</p>
+<p>To create histogram run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>.x<span class="w"> </span>hitmaps_hms.C
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="singularity_setup.html" class="btn btn-neutral float-left" title="Apptainer/Singularity Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Anil.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

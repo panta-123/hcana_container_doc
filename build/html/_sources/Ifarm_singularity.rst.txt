@@ -1,0 +1,30 @@
+.. highlight:: shell
+
+.. _singularity_ifarm:
+
+
+Singularity/Apptainer in ifarm
+******************************
+Ifarm by default provides singularity/apptainer. Login to the the ifarm node and simply execute the command
+
+.. code-block:: shell
+
+    $ singularity --version
+
+If you see the version name of songualrity/apptainer then it is working.
+
+The default image is available in ifarm for hcana as singularity/apptainer. For now it is located in ``/group/hallc/panta/hcana-0.98.sif``.
+
+To use the image you can simply run the following command:
+
+.. code-block:: shell
+
+    $ singularity shell --cleanenv  /group/hallc/panta/hcana-0.98.sif
+
+your ``home`` directory is available automatically.
+
+To make any directory to be available inside the container you can use ``--bind`` option. For example to acces group area in singularity.
+
+.. code-block:: shell
+
+    $ singularity shell --cleanenv --bins /group/hallc /group/hallc/panta/hcana-0.98.sif

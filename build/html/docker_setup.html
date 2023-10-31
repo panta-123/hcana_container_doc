@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docker/Podman Setup &mdash; hcana container 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Apptainer/Singularity Setup" href="singularity_setup.html" />
+    <link rel="prev" title="Hall C Analyzer (hcana) Container" href="hcana_container.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            hcana container
+              <img src="_static/JLab.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="container.html">What is Container ?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcana_container.html">Hall C Analyzer (hcana) Container</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Docker/Podman Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-hcana-command">Running hcana Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exiting-stopping-the-container">Exiting/Stopping the Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#restarting-the-container">Restarting the Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-graphics-display">Running Graphics Display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mounting-volume-to-docker">Mounting volume to docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copying-files-to-and-from-docker">Copying files to and from docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#removing-the-container">Removing the container</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_setup.html">Apptainer/Singularity Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_replay.html">Example</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hcana container</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Docker/Podman Setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/docker_setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="docker-podman-setup">
+<span id="setup"></span><h1>Docker/Podman Setup<a class="headerlink" href="#docker-podman-setup" title="Link to this heading"></a></h1>
+<p>Docker has to installed on your machine. Please refer to official docker <a class="reference external" href="https://docs.docker.com/get-docker/">documentation</a> on installation.
+You can also use <a class="reference external" href="https://podman.io/">Podman</a>  in the same wa, simply replace commad <code class="docutils literal notranslate"><span class="pre">docker</span></code> with <code class="docutils literal notranslate"><span class="pre">podman</span></code>.</p>
+<p>In the following instruction, make sure to replace the docker tag with the tag you want from Tags list in <a class="reference external" href="https://hub.docker.com/r/jeffersonlab/hallc-hcana/tags">docker hub</a> . These commands are for <code class="docutils literal notranslate"><span class="pre">hcana-0.98</span></code> tags of hcana.</p>
+<p>Once you have installed Docker on your computer, you can fetch an hcana image and create and start a container using the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>jeffersonlab/hallc-hcana:hcana-0.98
+</pre></div>
+</div>
+<p>Here, we fetch the <code class="docutils literal notranslate"><span class="pre">hallc-hcana:hcana-0.98</span></code> Docker image from Docker Hub and name the container “hcana”.</p>
+<p>To check if your container is running just run following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>ps
+</pre></div>
+</div>
+<p>you should see a container running.</p>
+<p>To go to the shell of the container run the following command</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>hcana<span class="w"> </span>bash
+</pre></div>
+</div>
+<p>Once you have executed the command, you should see the command prompt within Docker.
+To check where you are in the container just run <code class="docutils literal notranslate"><span class="pre">pwd</span></code> and you will see something like</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w">  </span><span class="nb">pwd</span>
+/hcana-hcana-xxx/myworkdir
+</pre></div>
+</div>
+<p>the <code class="docutils literal notranslate"><span class="pre">xxx</span></code> in our case will be <code class="docutils literal notranslate"><span class="pre">0.98</span></code></p>
+<section id="running-hcana-command">
+<h2>Running hcana Command<a class="headerlink" href="#running-hcana-command" title="Link to this heading"></a></h2>
+<p>To run the hcana command prompt, simply type <code class="docutils literal notranslate"><span class="pre">hcana</span></code> in the Docker command prompt as shown below:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># hcana</span>
+DB_DIR<span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>DBASE
+<span class="w">  </span>************************************************
+<span class="w">  </span>*<span class="w">                                              </span>*
+<span class="w">  </span>*<span class="w">            </span>W<span class="w"> </span>E<span class="w"> </span>L<span class="w"> </span>C<span class="w"> </span>O<span class="w"> </span>M<span class="w"> </span>E<span class="w">  </span>to<span class="w">  </span>the<span class="w">            </span>*
+<span class="w">  </span>*<span class="w">          </span>H<span class="w"> </span>A<span class="w"> </span>L<span class="w"> </span>L<span class="w"> </span>C<span class="w"> </span>++<span class="w">  </span>A<span class="w"> </span>N<span class="w"> </span>A<span class="w"> </span>L<span class="w"> </span>Y<span class="w"> </span>Z<span class="w"> </span>E<span class="w"> </span>R<span class="w">       </span>*
+<span class="w">  </span>*<span class="w">                                              </span>*
+<span class="w">  </span>*<span class="w">  </span>hcana<span class="w"> </span>release<span class="w">         </span><span class="m">0</span>.98<span class="w">      </span><span class="m">12</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2023</span><span class="w"> </span>*
+<span class="w">  </span>*<span class="w">  </span>PODD<span class="w"> </span>release<span class="w">         </span><span class="m">1</span>.7.7<span class="w">      </span><span class="m">12</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2023</span><span class="w"> </span>*
+<span class="w">  </span>*<span class="w">  </span>ROOT<span class="w">               </span><span class="m">6</span>.24/08<span class="w">      </span>Sep<span class="w"> </span><span class="m">29</span><span class="w"> </span><span class="m">2022</span><span class="w"> </span>*
+<span class="w">  </span>*<span class="w">                                              </span>*
+<span class="w">  </span>*<span class="w">            </span>For<span class="w"> </span>information<span class="w"> </span>visit<span class="w">             </span>*
+<span class="w">  </span>*<span class="w">      </span>http://hallcweb.jlab.org/hcana/docs/<span class="w">    </span>*
+<span class="w">  </span>*<span class="w">                                              </span>*
+<span class="w">  </span>************************************************
+hcana<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="exiting-stopping-the-container">
+<h2>Exiting/Stopping the Container<a class="headerlink" href="#exiting-stopping-the-container" title="Link to this heading"></a></h2>
+<p>To exit the container, simply type <code class="docutils literal notranslate"><span class="pre">exit</span></code>.
+To stop the container run the following after exiting from the container</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>stop<span class="w"> </span>hcana
+</pre></div>
+</div>
+</section>
+<section id="restarting-the-container">
+<h2>Restarting the Container<a class="headerlink" href="#restarting-the-container" title="Link to this heading"></a></h2>
+<p>If you want to restart the container (e.g., the one named “hcana”) and return to your work, use the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span>-i<span class="w"> </span>hcana
+</pre></div>
+</div>
+<p>Coppying files from local to</p>
+</section>
+<section id="running-graphics-display">
+<h2>Running Graphics Display<a class="headerlink" href="#running-graphics-display" title="Link to this heading"></a></h2>
+<p><strong>For macOS:</strong> Install XQuartz and enable “Allow connections from network clients.” Then, run the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ifconfig<span class="w"> </span>en0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>inet<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;$1==&quot;inet&quot; {print $2}&#39;</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>This will grab your IP address on the local network. Run echo $ip to make sure it was successful. If nothing is displayed, replace en0 with en1 or a higher number in the command.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>xhost<span class="w"> </span>+<span class="w"> </span><span class="nv">$ip</span>
+</pre></div>
+</div>
+<p>This will start XQuartz and whitelist your local IP address. Finally, you can start up ROOT with the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$ip</span>:0<span class="w"> </span>jeffersonlab/hallc-hcana::hcana-0.98
+</pre></div>
+</div>
+<p><strong>For Linux:</strong> You can use X11 forwarding. make sure you are in an X11 session run the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ifconfig<span class="w"> </span>en0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>inet<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;$1==&quot;inet&quot; {print $2}&#39;</span><span class="k">)</span>
+$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-name<span class="w"> </span>hcana<span class="w">  </span>-it<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">==</span><span class="nv">$ip</span>:0<span class="w"> </span>jeffersonlab/hallc-hcana::hcana-0.98
+</pre></div>
+</div>
+</section>
+<section id="mounting-volume-to-docker">
+<h2>Mounting volume to docker<a class="headerlink" href="#mounting-volume-to-docker" title="Link to this heading"></a></h2>
+<p>You may want to run your code macro in the hcana docker and also provide a input file to that code.
+You can do that by mounting you local directory to docker container.</p>
+<p>If you want to mount a certain diretory you can do that by using <code class="docutils literal notranslate"><span class="pre">-v</span></code> option.
+For example to mount local home directory to home diretory of docker  you can do:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w">  </span>-name<span class="w"> </span>hcana<span class="w">  </span>-it<span class="w"> </span>-v<span class="w"> </span>/home:/home<span class="w"> </span>jeffersonlab/hallc-hcana::hcana-0.98
+</pre></div>
+</div>
+</section>
+<section id="copying-files-to-and-from-docker">
+<h2>Copying files to and from docker<a class="headerlink" href="#copying-files-to-and-from-docker" title="Link to this heading"></a></h2>
+<p>If you don’t want to mount the directory or just want to move a file to docker container, you can use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">cp</span></code> command.</p>
+<p>copy to container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>cp<span class="w"> </span>my_local_file<span class="w"> </span>hcana:/directory/inside/docker
+</pre></div>
+</div>
+<p>copy from container</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>cp<span class="w"> </span>hcana:/directory/inside/docker/file<span class="w"> </span>/my/local/directory
+</pre></div>
+</div>
+</section>
+<section id="removing-the-container">
+<h2>Removing the container<a class="headerlink" href="#removing-the-container" title="Link to this heading"></a></h2>
+<p>If you want to remove the container as awhole you can use</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>rm<span class="w"> </span>hcana
+</pre></div>
+</div>
+<p><strong>Keep in mind that you will lose all the files in container. Be sure to copy files you want from docker container using</strong> <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">cp</span></code> <strong>command as mentioned in previous section</strong></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hcana_container.html" class="btn btn-neutral float-left" title="Hall C Analyzer (hcana) Container" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="singularity_setup.html" class="btn btn-neutral float-right" title="Apptainer/Singularity Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Anil.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

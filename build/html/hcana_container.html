@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hall C Analyzer (hcana) Container &mdash; hcana container 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Docker Setup" href="setup.html" />
+    <link rel="prev" title="What is Container ?" href="container.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            hcana container
+              <img src="_static/JLab.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="container.html">What is Container ?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Hall C Analyzer (hcana) Container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-hub-repository">Docker Hub Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ways-to-use-the-hcana-container">Ways to Use the hcana Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Docker Setup</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">hcana container</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Hall C Analyzer (hcana) Container</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/hcana_container.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hall-c-analyzer-hcana-container">
+<span id="hcana-container"></span><h1>Hall C Analyzer (hcana) Container<a class="headerlink" href="#hall-c-analyzer-hcana-container" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>The Hall C Analyzer (hcana) Container is a pre-configured environment for running Jefferson Lab’s Hall C Analyzer software.
+This container provides a convenient and consistent way to run hcana with all its dependencies, including PODD, ROOT, etc. It is hosted on Docker Hub for easy access.</p>
+</section>
+<section id="docker-hub-repository">
+<h2>Docker Hub Repository<a class="headerlink" href="#docker-hub-repository" title="Link to this heading"></a></h2>
+<p>The hcana Container is hosted on Docker Hub. You can find it at the following repository:</p>
+<ul class="simple">
+<li><p>Repository URL: <a class="reference external" href="https://hub.docker.com/r/jeffersonlab/hallc-hcana">https://hub.docker.com/r/jeffersonlab/hallc-hcana</a></p></li>
+</ul>
+</section>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
+<p>The hcana Container includes the following key components:</p>
+<ol class="arabic simple">
+<li><p><strong>ROOT</strong>: A powerful data analysis framework that is essential for high-energy physics and nuclear physics analyses.</p></li>
+<li><p><strong>PODD</strong>: specific PODD (Hall A Analyzer) commit that is used for the hcana.</p></li>
+<li><p><strong>HCANA</strong>: The Hall C Analyzer software, which is a part of the Jefferson Lab data analysis framework.</p></li>
+</ol>
+</section>
+<section id="ways-to-use-the-hcana-container">
+<h2>Ways to Use the hcana Container<a class="headerlink" href="#ways-to-use-the-hcana-container" title="Link to this heading"></a></h2>
+<p>You can use the hcana Container in various ways, depending on your requirements and your preferred containerization tool.
+The containerization tool supported are decribed below:</p>
+<ol class="arabic simple">
+<li><p><strong>Docker</strong>: Docker is one of the most popular containerization tool. Docker provides a straightforward method for running containerized applications.</p></li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Singularity</strong>: Singularity is a containerization tool that allows you to use containers, even on systems where you do not have administrative privileges.</p></li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ol class="arabic" start="3">
+<li><p><strong>Podman</strong>: Podman is a containerization tool designed as a drop-in replacement for Docker.</p>
+<ol class="loweralpha">
+<li><p>Pull the hcana Container from Docker Hub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>singularity<span class="w"> </span>pull<span class="w"> </span>docker://jeffersonlab/hallc-hcana:latest
+</pre></div>
+</div>
+</li>
+<li><p>Launch a shell within the Singularity container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>singularity<span class="w"> </span>shell<span class="w"> </span>hallc-hcana_latest.sif
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<div><p>To use hcana with Podman, follow these steps:</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>Pull the hcana Container from Docker Hub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>podman<span class="w"> </span>pull<span class="w"> </span>jeffersonlab/hallc-hcana:latest
+</pre></div>
+</div>
+</li>
+<li><p>Create and start a container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>podman<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>jeffersonlab/hallc-hcana:latest<span class="w"> </span>bash
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<p>The Hall C Analyzer (hcana) Container provides a versatile environment for running JLab HallC analysis.
+Whether you prefer Docker, Singularity, or Podman, you can easily use this container to access the powerful tools and libraries required for your work.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="container.html" class="btn btn-neutral float-left" title="What is Container ?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setup.html" class="btn btn-neutral float-right" title="Docker Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Anil.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
