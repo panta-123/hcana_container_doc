@@ -6,7 +6,7 @@
 Docker/Podman Setup
 *******************
 Docker has to installed on your machine. Please refer to official docker `documentation <https://docs.docker.com/get-docker/>`_ on installation.
-You can also use `Podman <https://podman.io/>`_  in the same wa, simply replace commad ``docker`` with ``podman``.
+You can also use `Podman <https://podman.io/>`_  in the same way, simply replace commad ``docker`` with ``podman``.
 
 In the following instruction, make sure to replace the docker tag with the tag you want from Tags list in `docker hub <https://hub.docker.com/r/jeffersonlab/hallc-hcana/tags>`_ . These commands are for ``hcana-0.98`` tags of hcana.
 
