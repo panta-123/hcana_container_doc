@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Docker Setup" href="setup.html" />
+    <link rel="next" title="Docker/Podman Setup" href="docker_setup.html" />
     <link rel="prev" title="What is Container ?" href="container.html" /> 
 </head>
 
@@ -54,7 +54,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Docker Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_setup.html">Docker/Podman Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_setup.html">Apptainer/Singularity Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_replay.html">Example</a></li>
 </ul>
 
         </div>
@@ -120,39 +122,9 @@ The containerization tool supported are decribed below:</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<ol class="arabic" start="3">
-<li><p><strong>Podman</strong>: Podman is a containerization tool designed as a drop-in replacement for Docker.</p>
-<ol class="loweralpha">
-<li><p>Pull the hcana Container from Docker Hub:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>singularity<span class="w"> </span>pull<span class="w"> </span>docker://jeffersonlab/hallc-hcana:latest
-</pre></div>
-</div>
-</li>
-<li><p>Launch a shell within the Singularity container:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>singularity<span class="w"> </span>shell<span class="w"> </span>hallc-hcana_latest.sif
-</pre></div>
-</div>
-</li>
+<ol class="arabic simple" start="3">
+<li><p><strong>Podman</strong>: Podman is a containerization tool designed as a drop-in replacement for Docker.</p></li>
 </ol>
-</li>
-</ol>
-<blockquote>
-<div><p>To use hcana with Podman, follow these steps:</p>
-<blockquote>
-<div><ol class="loweralpha">
-<li><p>Pull the hcana Container from Docker Hub:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>podman<span class="w"> </span>pull<span class="w"> </span>jeffersonlab/hallc-hcana:latest
-</pre></div>
-</div>
-</li>
-<li><p>Create and start a container:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>podman<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>jeffersonlab/hallc-hcana:latest<span class="w"> </span>bash
-</pre></div>
-</div>
-</li>
-</ol>
-</div></blockquote>
-</div></blockquote>
 </section>
 <section id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
@@ -166,7 +138,7 @@ Whether you prefer Docker, Singularity, or Podman, you can easily use this conta
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="container.html" class="btn btn-neutral float-left" title="What is Container ?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="setup.html" class="btn btn-neutral float-right" title="Docker Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="docker_setup.html" class="btn btn-neutral float-right" title="Docker/Podman Setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
