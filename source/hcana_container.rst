@@ -47,36 +47,6 @@ The containerization tool supported are decribed below:
 3. **Podman**: Podman is a containerization tool designed as a drop-in replacement for Docker.
 
 
-   a. Pull the hcana Container from Docker Hub:
-
-      .. code-block:: shell
-
-        singularity pull docker://jeffersonlab/hallc-hcana:latest
-      
-
-   b. Launch a shell within the Singularity container:
-
-      .. code-block:: shell
-
-        singularity shell hallc-hcana_latest.sif
-
-
- To use hcana with Podman, follow these steps:
-
-   a. Pull the hcana Container from Docker Hub:
-
-      .. code-block:: shell
-
-        podman pull jeffersonlab/hallc-hcana:latest
-
-
-   b. Create and start a container:
-
-      .. code-block:: shell
-        
-        podman run --name hcana -it jeffersonlab/hallc-hcana:latest bash
-
-
 Conclusion
 ----------
 

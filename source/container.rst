@@ -26,7 +26,7 @@ Containers exhibit the following key characteristics:
 
 
 High-energy and nuclear physics experiments and simulations often require a myriad of software packages, libraries, and dependencies. 
-Managing and deploying these software components can be challenging. In this chapter, we will explore how containers offer a practical solution to handle software packages in the context of high-energy and nuclear physics research.
+Managing and deploying these software components can be challenging.
 
 Challenges of Software Package Management
 -------------------------------------------
