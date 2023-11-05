@@ -109,7 +109,7 @@ This will start XQuartz and whitelist your local IP address. Finally, you can st
 
 .. code-block:: shell
 
-    $ docker run -name hcana -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$ip:0 docker.io/jeffersonlab/hallc-hcana::hcana-0.98
+    $ docker run --name hcana -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$ip:0 docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 
 
 **For Linux:** You can use X11 forwarding. make sure you are in an X11 session run the following command:
@@ -117,7 +117,7 @@ This will start XQuartz and whitelist your local IP address. Finally, you can st
 .. code-block:: shell
 
     $ ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-    $ docker run -name hcana  -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY==$ip:0 docker.io/jeffersonlab/hallc-hcana::hcana-0.98
+    $ docker run --name hcana  -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY==$ip:0 docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 
 Mounting volume to docker
 -------------------------
@@ -129,7 +129,7 @@ For example to mount local home directory to home diretory of docker  you can do
 
 .. code-block:: shell
 
-    $ docker run  -name hcana  -it -d -v /home:/home docker.io/jeffersonlab/hallc-hcana::hcana-0.98 
+    $ docker run  --name hcana  -it -d -v /home:/home docker.io/jeffersonlab/hallc-hcana:hcana-0.98 
 
 Copying files to and from docker
 --------------------------------
