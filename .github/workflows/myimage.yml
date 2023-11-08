@@ -15,6 +15,5 @@ jobs:
           uses: antifree/json-to-variables@v1.1.1
           with:
             filename: 'test.json'
-            prefix: test
         - name: show output
-          run : echo "{{ env.test_hcana }}, {{ env.test_podd }}, {{ env}}"
+          run : echo "{{ env.hcana }}, {{ env.podd }}, {{ env}}"
