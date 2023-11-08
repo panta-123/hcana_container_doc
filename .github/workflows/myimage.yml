@@ -16,4 +16,4 @@ jobs:
           with:
             filename: 'test.json'
         - name: show output
-          run : echo "$hcana, $podd, {{ env}}"
+          run : echo "${{ env.hcana }}, ${{ env.podd }}, {{ env}}"
