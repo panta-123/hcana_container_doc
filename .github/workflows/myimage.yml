@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name : JSON to variables
+          uses: rgarcia-phi/json-to-variables@v1.1.0
+          with:
+            filename: 'test.json'
+            prefix: test
+        - name: show output
+          run : echo "{{ env.test_hcana }}, {{ env.test_podd }}"
