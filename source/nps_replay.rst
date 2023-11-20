@@ -26,7 +26,7 @@ To make it owrk with you, please change the paths in "modify as you need" part o
 .. code:: bash
 
 
-    #!/bin/bash
+    #!/usr/bin/bash
 
     spec="nps"
     SPEC="NPS"
@@ -42,9 +42,10 @@ To make it owrk with you, please change the paths in "modify as you need" part o
     APPTAINER_IMAGE="/path/to/apptainer/nps.sif"  # apptainer image location
     # for the following make sure your replay script take following as env varibales.
     # e.g. in https://github.com/JeffersonLab/nps_replay/pull/37/files 
-    DATA_DIR=/cache/hallc/c-nps/raw                       # raw data directory.
-    LOG_DIR=/path/to/log/dir/nps_log             # REPORT output directory
-    OUT_DIR=/path/to/output/root/dir/nps_root            # OUTPUT rootfiles
+ 
+    DATA_DIR=/cache/hallc/c-nps/raw               # raw data directory.
+    LOG_DIR=/path/to/REPORT_OUTPUT/dir              # REPORT output directory
+    OUT_DIR=/path/to/output/root/dir     # OUTPUT rootfiles
     #--------------------------------------------------
 
     cd $SCRDIR
@@ -73,9 +74,60 @@ To make it owrk with you, please change the paths in "modify as you need" part o
     echo "----------------------------------------------------------------------------------------------"
     echo 
 
-    runStr="apptainer exec  --bind ${DATA_DIR} --bind ${OUT_DIR} --bind ${LOG_DIR} --bind ${SCRDIR}  ${APPTAINER_IMAGE} bash -c \"hcana -q ${SCRIPT}\(${runNum},${nEvent}\)\""
+    runStr="apptainer exec  --env-file output.env --bind ${DATA_DIR} --bind ${OUT_DIR} --bind ${LOG_DIR} --bind ${SCRDIR}  ${APPTAINER_IMAGE} bash -c \"hcana -q ${SCRIPT}\(${runNum},${nEvent}\)\""
     eval ${runStr}
 
+
+if your replay doesn't take env variable for raw data, output rootfile and report . **Make sure you have corrresponding link directory in the replay directory**.
+Use following as run_nps_replay_apptainer.sh for link directory structure in replay:
+
+.. code:: bash
+
+    #!/usr/bin/bash
+
+    spec="nps"
+    SPEC="NPS"
+
+    # Two input args
+    runNum=$1    # RUN Number
+    nEvent=$2    # Number of events in that run
+
+    # Modify as you need
+    #--------------------------------------------------
+    SCRDIR="/path/to/nps_replay"                  # my replay directory
+    SCRIPT="SCRIPTS/${SPEC}/eel108_replay.C"      # replay script to run, relative to nps_replay directory
+    APPTAINER_IMAGE="/path/to/apptainer/nps.sif"  # apptainer image location
+    DATA_DIR="/path/to/RAWDIR"
+    OUT_DIR="/path/to/rootfile/directory"
+    LOG_DIR="/path/to/REPORT_OTUPUT/directory"
+    #--------------------------------------------------
+
+    cd $SCRDIR
+
+    # Check if apptainer is available
+    if command -v apptainer > /dev/null 2>&1; then
+        echo "apptainer is already available."
+    else
+        # Load apptainer if not available
+        echo "Loading apptainer..."
+        eval module load apptainer
+    fi
+
+    echo 
+    echo "---------------------------------------------------------------------------------------------"
+    echo "NPS SINGLE REPLAY for ${runNum}. NEvent=${nEvent} using NPSlib container=${APPTAINER_IMAGE}"
+    echo "----------------------------------------------------------------------------------------------"
+    echo 
+
+    runStr="apptainer exec --bind ${DATA_DIR} --bind ${OUT_DIR} --bind ${LOG_DIR} --bind ${SCRDIR}  ${APPTAINER_IMAGE} bash -c \"hcana -q ${SCRIPT}\(${runNum},${nEvent}\)\""
+    eval ${runStr}
+
+
+Make the file executables as:
+
+.. code:: bash
+
+    $ chmod +x run_nps_replay_apptainer.sh
 
 Now in ifarm you can just to following to run a single jobs.
 Add corresponding run_num and num_events that you want to analyze.
@@ -96,7 +148,7 @@ Example swif command line to submit a jobs is:
 
 .. code:: bash
 
-    $ swif2 add-job pantatestwork2 -account hallc -partition production -shell /bin/bash -input nps_345.dat.0 mss:/mss/hallc/c-nps/raw/nps_345.dat.0 -cores 1 -stdout /volatile/hallc/nps/panta/my.out -stderr /volatile/hallc/nps/panta/my.err /work/hallc/nps/panta/nps_replay/jobs/run_swif.sh 345 100
+    $ swif2 add-job myworkflow -account hallc -partition production -shell /bin/bash -input nps_345.dat.0 mss:/mss/hallc/c-nps/raw/nps_345.dat.0 -cores 1 -stdout /path/to/my.out -stderr /path/to/my.err /path/to/run_nps_replay_apptainer.sh 345 100
 
 
 hcswif
