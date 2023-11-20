@@ -15,6 +15,7 @@ Welcome to hcana container's documentation!
    docker_setup
    singularity_setup
    example_replay
+   nps_replay
    
   
 
