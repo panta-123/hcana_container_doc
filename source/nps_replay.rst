@@ -5,7 +5,7 @@
 NPS REPLAY with apptainer
 **************************
 To run NPS replay we have a NPSlib container.
-NPSlib is a extention on hcana fro NPS experiment. Github link `here <https://github.com/JeffersonLab/NPSlib>`_
+NPSlib is a extention on hcana for NPS experiment. Github link `here <https://github.com/JeffersonLab/NPSlib>`_
 
 The container for NPSlib are at dockerHUB : https://hub.docker.com/r/jeffersonlab/hallc-npslib/tags 
 
@@ -21,7 +21,7 @@ I have build my image with the name at "`nps.sif`"
 
 
 Lets write a bash script to run on ifarm. Filename for this eaxmple is run_nps_replay_apptainer.sh
-To make it owrk with you, please change the paths in "modify as you need" part of code.
+To make it wotk with you, please change the paths in "modify as you need" part of code.
 
 .. code:: bash
 
