@@ -3,6 +3,9 @@
 .. _setup:
 
 
+Ifarm/Farm users will need to use the Apptainer method. 
+Podman (and the equivalent docker commands) will only work under the upcoming RHEL9/Alma9 system in Ifarm/Farm.
+
 Docker/Podman Setup
 *******************
 Docker has to installed on your machine. Please refer to official docker `documentation <https://docs.docker.com/get-docker/>`_ on installation.
@@ -95,29 +98,19 @@ Running Graphics Display
 
 **For macOS:** Install XQuartz and enable "Allow connections from network clients." Then, run the following command:
 
-.. code-block:: shell
-
-    $ ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-
-This will grab your IP address on the local network. Run echo $ip to make sure it was successful. If nothing is displayed, replace en0 with en1 or a higher number in the command.
-
-.. code-block:: shell
-        
-        $ xhost + $ip
     
 This will start XQuartz and whitelist your local IP address. Finally, you can start up ROOT with the following command:
 
 .. code-block:: shell
 
-    $ docker run --name hcana -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$ip:0 docker.io/jeffersonlab/hallc-hcana:hcana-0.98
+    $ docker run --name hcana -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 
 
 **For Linux:** You can use X11 forwarding. make sure you are in an X11 session run the following command:
 
 .. code-block:: shell
 
-    $ ip=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-    $ docker run --name hcana  -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY==$ip:0 docker.io/jeffersonlab/hallc-hcana:hcana-0.98
+    $ docker run --name hcana  -it -d -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY==$$DISPLAY docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 
 Mounting volume to docker
 -------------------------

@@ -7,6 +7,7 @@
   <title>NPS REPLAY with apptainer &mdash; hcana container 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +17,8 @@
         <script src="_static/documentation_options.js?v=d45e8c67"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=08e7b316"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -93,8 +96,9 @@ NPSlib is a extention on hcana for NPS experiment. Github link <a class="referen
 </div>
 <p>Here we are using the v0.1.0 version of the NPSlib which is also version of container.
 I have build my image with the name at “<cite>nps.sif</cite>”</p>
-<p>Lets write a bash script to run on ifarm. Filename for this eaxmple is run_nps_replay_apptainer.sh
-To make it wotk with you, please change the paths in “modify as you need” part of code.</p>
+<p>Lets write a bash script to run on ifarm. Filename for this eaxmple is run_nps_replay_apptainer.sh .
+To make it work with you, please change the paths in “modify as you need” part of code.
+Following asummes that your replay takes the env var argument as for raw data , rootfile and report output as shwown in <a class="reference external" href="https://github.com/JeffersonLab/nps_replay/pull/37/files">here</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/bash</span>
 
 <span class="nv">spec</span><span class="o">=</span><span class="s2">&quot;nps&quot;</span>
@@ -113,9 +117,13 @@ To make it wotk with you, please change the paths in “modify as you need” pa
 <span class="c1"># e.g. in https://github.com/JeffersonLab/nps_replay/pull/37/files</span>
 
 <span class="nv">DATA_DIR</span><span class="o">=</span>/cache/hallc/c-nps/raw<span class="w">               </span><span class="c1"># raw data directory.</span>
-<span class="nv">LOG_DIR</span><span class="o">=</span>/path/to/REPORT_OUTPUT/dir<span class="w">              </span><span class="c1"># REPORT output directory</span>
-<span class="nv">OUT_DIR</span><span class="o">=</span>/path/to/output/root/dir<span class="w">     </span><span class="c1"># OUTPUT rootfiles</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span>/path/to/REPORT_OUTPUT/dir<span class="w">        </span><span class="c1"># REPORT output directory</span>
+<span class="nv">OUT_DIR</span><span class="o">=</span>/path/to/output/root/dir<span class="w">              </span><span class="c1"># OUTPUT rootfiles</span>
 <span class="c1">#--------------------------------------------------</span>
+
+<span class="c1"># making sure the directory exists.</span>
+mkdir<span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span>
+mkdir<span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span>
 
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$SCRDIR</span>
 
@@ -163,10 +171,13 @@ Use following as run_nps_replay_apptainer.sh for link directory structure in rep
 <span class="nv">SCRDIR</span><span class="o">=</span><span class="s2">&quot;/path/to/nps_replay&quot;</span><span class="w">                  </span><span class="c1"># my replay directory</span>
 <span class="nv">SCRIPT</span><span class="o">=</span><span class="s2">&quot;SCRIPTS/</span><span class="si">${</span><span class="nv">SPEC</span><span class="si">}</span><span class="s2">/eel108_replay.C&quot;</span><span class="w">      </span><span class="c1"># replay script to run, relative to nps_replay directory</span>
 <span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/path/to/apptainer/nps.sif&quot;</span><span class="w">  </span><span class="c1"># apptainer image location</span>
-<span class="nv">DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/RAWDIR&quot;</span>
-<span class="nv">OUT_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/rootfile/directory&quot;</span>
-<span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/REPORT_OTUPUT/directory&quot;</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span>/path/to/RAWDIR
+<span class="nv">OUT_DIR</span><span class="o">=</span>/path/to/output/root/dir
+<span class="nv">LOG_DIR</span><span class="o">=</span>/path/to/REPORT_OUTPUT/dir
 <span class="c1">#--------------------------------------------------</span>
+
+mkdir<span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span>
+mkdir<span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span>
 
 <span class="nb">cd</span><span class="w"> </span><span class="nv">$SCRDIR</span>
 
@@ -205,10 +216,18 @@ Add corresponding run_num and num_events that you want to analyze.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DATA_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>
 </pre></div>
 </div>
-<p>Example swif command line to submit a jobs is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>swif2<span class="w"> </span>add-job<span class="w"> </span>myworkflow<span class="w"> </span>-account<span class="w"> </span>hallc<span class="w"> </span>-partition<span class="w"> </span>production<span class="w"> </span>-shell<span class="w"> </span>/bin/bash<span class="w"> </span>-input<span class="w"> </span>nps_345.dat.0<span class="w"> </span>mss:/mss/hallc/c-nps/raw/nps_345.dat.0<span class="w"> </span>-cores<span class="w"> </span><span class="m">1</span><span class="w"> </span>-stdout<span class="w"> </span>/path/to/my.out<span class="w"> </span>-stderr<span class="w"> </span>/path/to/my.err<span class="w"> </span>/path/to/run_nps_replay_apptainer.sh<span class="w"> </span><span class="m">345</span><span class="w"> </span><span class="m">100</span>
+<p>How to use swif is explained in <a class="reference external" href="https://scicomp.jlab.org/docs/swif2">this</a> .
+Input file is specified in swif as :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-input<span class="w"> </span>&lt;filename&gt;<span class="w"> </span>mss:/mss/hallc/c-nps/raw/&lt;filename&gt;
 </pre></div>
 </div>
+<p>Here , replace &lt;filename&gt; with actual filename. For example nps_345.dat.0. This will then will automatically show up in the working directory.
+On the script make sure to have DATA_DIR specifies as $PWD before moving into any other direrectory.
+Example swif command line to submit a jobs is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>swif2<span class="w"> </span>add-job<span class="w"> </span>myworkflow<span class="w"> </span>-account<span class="w"> </span>hallc<span class="w"> </span>-partition<span class="w"> </span>production<span class="w"> </span>-shell<span class="w"> </span>/bin/bash<span class="w"> </span>-input<span class="w"> </span>nps_345.dat.0<span class="w"> </span>mss:/mss/hallc/c-nps/raw/nps_345.dat.0<span class="w"> </span>-cores<span class="w"> </span><span class="m">1</span><span class="w"> </span>/path/to/run_nps_replay_apptainer.sh<span class="w"> </span><span class="m">345</span><span class="w"> </span><span class="m">100</span>
+</pre></div>
+</div>
+<p>Your std out and err of the job will writeen to /farm_out/$USER/&lt;foo&gt;.{out,err} by default.</p>
 </section>
 <section id="hcswif">
 <h2>hcswif<a class="headerlink" href="#hcswif" title="Link to this heading"></a></h2>

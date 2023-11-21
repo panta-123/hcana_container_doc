@@ -7,6 +7,7 @@
   <title>Docker/Podman Setup &mdash; hcana container 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +17,8 @@
         <script src="_static/documentation_options.js?v=d45e8c67"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=08e7b316"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,8 +89,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="docker-podman-setup">
-<span id="setup"></span><h1>Docker/Podman Setup<a class="headerlink" href="#docker-podman-setup" title="Link to this heading"></a></h1>
+  <p id="setup">Ifarm/Farm users will need to use the Apptainer method.
+Podman (and the equivalent docker commands) will only work under the upcoming RHEL9/Alma9 system in Ifarm/Farm.</p>
+<section id="docker-podman-setup">
+<h1>Docker/Podman Setup<a class="headerlink" href="#docker-podman-setup" title="Link to this heading"></a></h1>
 <p>Docker has to installed on your machine. Please refer to official docker <a class="reference external" href="https://docs.docker.com/get-docker/">documentation</a> on installation.
 You can also use <a class="reference external" href="https://podman.io/">Podman</a>  in the same way, simply replace commad <code class="docutils literal notranslate"><span class="pre">docker</span></code> with <code class="docutils literal notranslate"><span class="pre">podman</span></code>.</p>
 <p>In the following instruction, make sure to replace the docker tag with the tag you want from Tags list in <a class="reference external" href="https://hub.docker.com/r/jeffersonlab/hallc-hcana/tags">docker hub</a> . These commands are for <code class="docutils literal notranslate"><span class="pre">hcana-0.98</span></code> tags of hcana.</p>
@@ -153,20 +158,12 @@ To stop the container run the following after exiting from the container</p>
 <section id="running-graphics-display">
 <h2>Running Graphics Display<a class="headerlink" href="#running-graphics-display" title="Link to this heading"></a></h2>
 <p><strong>For macOS:</strong> Install XQuartz and enable “Allow connections from network clients.” Then, run the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ifconfig<span class="w"> </span>en0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>inet<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;$1==&quot;inet&quot; {print $2}&#39;</span><span class="k">)</span>
-</pre></div>
-</div>
-<p>This will grab your IP address on the local network. Run echo $ip to make sure it was successful. If nothing is displayed, replace en0 with en1 or a higher number in the command.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>xhost<span class="w"> </span>+<span class="w"> </span><span class="nv">$ip</span>
-</pre></div>
-</div>
 <p>This will start XQuartz and whitelist your local IP address. Finally, you can start up ROOT with the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$ip</span>:0<span class="w"> </span>docker.io/jeffersonlab/hallc-hcana:hcana-0.98
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span><span class="w"> </span>docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 </pre></div>
 </div>
 <p><strong>For Linux:</strong> You can use X11 forwarding. make sure you are in an X11 session run the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">ip</span><span class="o">=</span><span class="k">$(</span>ifconfig<span class="w"> </span>en0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>inet<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;$1==&quot;inet&quot; {print $2}&#39;</span><span class="k">)</span>
-$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w">  </span>-it<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">==</span><span class="nv">$ip</span>:0<span class="w"> </span>docker.io/jeffersonlab/hallc-hcana:hcana-0.98
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>hcana<span class="w">  </span>-it<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>/tmp/.X11-unix:/tmp/.X11-unix<span class="w"> </span>-e<span class="w"> </span><span class="nv">DISPLAY</span><span class="o">==</span><span class="nv">$$</span>DISPLAY<span class="w"> </span>docker.io/jeffersonlab/hallc-hcana:hcana-0.98
 </pre></div>
 </div>
 </section>

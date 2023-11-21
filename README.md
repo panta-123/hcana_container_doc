@@ -17,7 +17,7 @@ source .env/bin/activate
 ```
 Install using (only should be done once.)
 ```shell
-pip install sphinx sphinx-rtd-theme
+pip install sphinx sphinx-rtd-theme sphinx-copybutton
 ```
  Now build the doc
 ```shell
