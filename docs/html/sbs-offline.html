@@ -53,7 +53,11 @@
 <li class="toctree-l1"><a class="reference internal" href="singularity_setup.html">Apptainer/Singularity Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example_replay.html">Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nps_replay.html">NPS REPLAY with apptainer</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">SBS offline and related replay</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SBS offline and related replay</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-sbs-offline-apptainer-image">Building the SBS-offline apptainer image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#swif2-jobs">swif2 jobs</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -82,25 +86,33 @@
              
   <section id="sbs-offline-and-related-replay">
 <span id="sbs-offline"></span><h1>SBS offline and related replay<a class="headerlink" href="#sbs-offline-and-related-replay" title="Link to this heading"></a></h1>
+<p>To run SBS related replay we have a SBS-offline container.
+SBS-offline is a extention on analyzer for SBS experiment. Github link <a class="reference external" href="https://github.com/JeffersonLab/SBS-offline">here</a></p>
+<p>The container for SBS-offline are at dockerHUB : <strong>*</strong></p>
+<section id="building-the-sbs-offline-apptainer-image">
+<h2>Building the SBS-offline apptainer image<a class="headerlink" href="#building-the-sbs-offline-apptainer-image" title="Link to this heading"></a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>build<span class="w"> </span>nps.sif<span class="w"> </span>docker://jeffersonlab/
+</pre></div>
+</div>
+<p>Here we are using the v0.1.0 version of the SBS-offline which is also version of container.
+I have build my image with the name at “<cite>sbs.sif</cite>”</p>
+<p>Lets write a bash script to run on ifarm. Filename for this eaxmple is run_gmn_replay_apptainer.sh .
+To make it work with you, please change the paths in “modify as you need” part of code.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 
 <span class="c1"># Modify as you need</span>
-<span class="c1">#-----------------------------------------</span>
-<span class="nv">SBS_REPLAY</span><span class="o">=</span><span class="s2">&quot;/volatile/hallc/nps/panta/sbs/SBS-replay&quot;</span>
+<span class="c1"># change DATA_DIR to ${PWD} if running with swif</span>
+<span class="c1">#------------------------------------------------------------</span>
+<span class="nv">SBS_REPLAY</span><span class="o">=</span><span class="s2">&quot;/path/to/SBS-replay&quot;</span>
 <span class="nv">DB_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SBS_REPLAY</span><span class="si">}</span><span class="s2">/DB &quot;</span>
 <span class="nv">script</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SBS_REPLAY_DIR</span><span class="si">}</span><span class="s2">/replay/replay_gen.C&quot;</span><span class="w">                         </span><span class="c1"># script to run</span>
-<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/volatile/hallc/nps/panta/sbs/npsalmamin.sif&quot;</span><span class="w">         </span><span class="c1"># apptainer image location</span>
+<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/path/to/my/apptainer/sbs.sif&quot;</span><span class="w">         </span><span class="c1"># apptainer image location</span>
 
-<span class="c1"># change DATA_DIR to ${PWD} if running with swif</span>
 <span class="nv">DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/cache/mss/halla/sbs/GEnII/raw&quot;</span>
-<span class="nv">OUT_DIR</span><span class="o">=</span><span class="s2">&quot;/volatile/hallc/nps/panta/sbs/GMN_REPLAYS/rootfiles&quot;</span>
-<span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">&quot;/volatile/hallc/nps/panta/sbs/GMN_REPLAYS/logs&quot;</span>
+<span class="nv">OUT_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/output/GMN_REPLAYS/rootfiles&quot;</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/log/GMN_REPLAYS/logs&quot;</span>
 <span class="nv">ANALYZER_CONFIGPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SBS_REPLAY</span><span class="si">}</span><span class="s2">/replay&quot;</span>
-
-<span class="c1">#--------------------------------------------</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;working directory = &#39;</span><span class="nv">$PWD</span>
-
-<span class="c1">#cp $SBS/run_replay_here/.rootrc $PWD</span>
+<span class="c1">#--------------------------------------------------------------</span>
 
 <span class="c1">#create directory if not exists</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span>
@@ -133,6 +145,27 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span
 <span class="nb">eval</span><span class="w"> </span><span class="si">${</span><span class="nv">runStr</span><span class="si">}</span>
 </pre></div>
 </div>
+</section>
+<section id="swif2-jobs">
+<h2>swif2 jobs<a class="headerlink" href="#swif2-jobs" title="Link to this heading"></a></h2>
+<p>To use the above script with swif jobs. Please replace the DATA_DIR path to following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">DATA_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>How to use swif is explained in <a class="reference external" href="https://scicomp.jlab.org/docs/swif2">this</a> .
+Input file is specified in swif as :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-input<span class="w"> </span>&lt;filename&gt;<span class="w"> </span>mss:mss/halla/sbs/GEnII/raw/&lt;filename&gt;
+</pre></div>
+</div>
+<p>Here , replace &lt;filename&gt; with actual filename. This will then will automatically show up in the working directory.
+On the script make sure to have DATA_DIR specifies as $PWD before moving into any other direrectory.
+Example swif command line to submit a jobs is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>swif2<span class="w"> </span>add-job<span class="w"> </span>myworkflow<span class="w"> </span>-account<span class="w"> </span>halla<span class="w"> </span>-partition<span class="w"> </span>production<span class="w"> </span>-shell<span class="w"> </span>/bin/bash<span class="w"> </span>-input<span class="w"> </span>&lt;filename&gt;<span class="w"> </span>mss:mss/halla/sbs/GEnII/raw/&lt;filename&gt;<span class="w"> </span>-cores<span class="w"> </span><span class="m">1</span><span class="w"> </span>/path/to/run_gmn_replay_apptainer.sh<span class="w"> </span><span class="m">345</span><span class="w"> </span><span class="m">100</span>
+</pre></div>
+</div>
+<p>Your std out and err of the job will writeen to /farm_out/$USER/&lt;foo&gt;.{out,err} by default.
+Replace filename with properfile name and add proper run number or othe option to scripts.</p>
+</section>
 </section>
 
 
