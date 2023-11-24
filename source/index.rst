@@ -16,7 +16,7 @@ Welcome to hcana container's documentation!
    singularity_setup
    example_replay
    nps_replay
-   
+   sbs-offline
   
 
 
