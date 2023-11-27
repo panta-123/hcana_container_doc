@@ -15,10 +15,10 @@ Building the SBS-offline apptainer image
 
 .. code-block:: shell
 
-    $ apptainer build nps.sif docker://jeffersonlab/
+    $ apptainer build sbs_offline.sif docker://jeffersonlab/halla-sbs-offline:v1.0.0
 
 Here we are using the v0.1.0 version of the SBS-offline which is also version of container.
-I have build my image with the name at "`sbs.sif`"
+I have build my image with the name at "`sbs_offline.sif`"
 
 
 Lets write a bash script to run on ifarm. Filename for this eaxmple is run_gmn_replay_apptainer.sh .
@@ -34,7 +34,7 @@ To make it work with you, please change the paths in "modify as you need" part o
     SBS_REPLAY="/path/to/SBS-replay" 
     DB_DIR="${SBS_REPLAY}/DB "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     script="${SBS_REPLAY_DIR}/replay/replay_gen.C"                         # script to run                                                                                                                                                                                                                                                                                                                                                                                                                    
-    APPTAINER_IMAGE="/path/to/my/apptainer/sbs.sif"         # apptainer image location
+    APPTAINER_IMAGE="/path/to/my/apptainer/sbs_offline.sif"         # apptainer image location
 
     DATA_DIR="/cache/mss/halla/sbs/GEnII/raw"
     OUT_DIR="/path/to/output/GMN_REPLAYS/rootfiles"

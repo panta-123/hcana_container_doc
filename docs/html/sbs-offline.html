@@ -91,11 +91,11 @@ SBS-offline is a extention on analyzer for SBS experiment. Github link <a class=
 <p>The container for SBS-offline are at dockerHUB : <strong>*</strong></p>
 <section id="building-the-sbs-offline-apptainer-image">
 <h2>Building the SBS-offline apptainer image<a class="headerlink" href="#building-the-sbs-offline-apptainer-image" title="Link to this heading"></a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>build<span class="w"> </span>nps.sif<span class="w"> </span>docker://jeffersonlab/
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>build<span class="w"> </span>sbs_offline.sif<span class="w"> </span>docker://jeffersonlab/halla-sbs-offline:v1.0.0
 </pre></div>
 </div>
 <p>Here we are using the v0.1.0 version of the SBS-offline which is also version of container.
-I have build my image with the name at “<cite>sbs.sif</cite>”</p>
+I have build my image with the name at “<cite>sbs_offline.sif</cite>”</p>
 <p>Lets write a bash script to run on ifarm. Filename for this eaxmple is run_gmn_replay_apptainer.sh .
 To make it work with you, please change the paths in “modify as you need” part of code.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
@@ -106,7 +106,7 @@ To make it work with you, please change the paths in “modify as you need” pa
 <span class="nv">SBS_REPLAY</span><span class="o">=</span><span class="s2">&quot;/path/to/SBS-replay&quot;</span>
 <span class="nv">DB_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SBS_REPLAY</span><span class="si">}</span><span class="s2">/DB &quot;</span>
 <span class="nv">script</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SBS_REPLAY_DIR</span><span class="si">}</span><span class="s2">/replay/replay_gen.C&quot;</span><span class="w">                         </span><span class="c1"># script to run</span>
-<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/path/to/my/apptainer/sbs.sif&quot;</span><span class="w">         </span><span class="c1"># apptainer image location</span>
+<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/path/to/my/apptainer/sbs_offline.sif&quot;</span><span class="w">         </span><span class="c1"># apptainer image location</span>
 
 <span class="nv">DATA_DIR</span><span class="o">=</span><span class="s2">&quot;/cache/mss/halla/sbs/GEnII/raw&quot;</span>
 <span class="nv">OUT_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/output/GMN_REPLAYS/rootfiles&quot;</span>
