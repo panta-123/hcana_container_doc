@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = u'hcana container'
+project = u'Hall A/C container'
 copyright = '2023, Anil'
 author = 'Anil'
 release = '0.0.1'
