@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to hcana container's documentation!
-===========================================
+Welcome to Hall A/C container's documentation!
+===============================================
 
 .. toctree::
    :maxdepth: 2
