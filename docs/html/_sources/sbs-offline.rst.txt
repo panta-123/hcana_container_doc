@@ -8,7 +8,7 @@ SBS offline and related replay
 To run SBS related replay we have a SBS-offline container.
 SBS-offline is a extention on analyzer for SBS experiment. Github link `here <https://github.com/JeffersonLab/SBS-offline>`_
 
-The container for SBS-offline are at dockerHUB : *****
+The container for SBS-offline are at dockerHUB : `here <https://hub.docker.com/r/jeffersonlab/halla-sbs-offline/tags>`_
 
 Building the SBS-offline apptainer image
 ----------------------------------------
@@ -21,7 +21,7 @@ Here we are using the v0.1.0 version of the SBS-offline which is also version of
 I have build my image with the name at "`sbs_offline.sif`"
 
 
-Lets write a bash script to run on ifarm. Filename for this eaxmple is run_gmn_replay_apptainer.sh .
+Lets write a bash script to run on ifarm. Filename for this example is run_gmn_replay_apptainer.sh .
 To make it work with you, please change the paths in "modify as you need" part of code.
 
 .. code-block:: bash
