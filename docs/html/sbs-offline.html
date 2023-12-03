@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nps_replay.html">NPS REPLAY with apptainer</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SBS offline and related replay</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-sbs-offline-apptainer-image">Building the SBS-offline apptainer image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debug-using-interactive-shell">Debug using interactive shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swif2-jobs">swif2 jobs</a></li>
 </ul>
 </li>
@@ -145,6 +146,24 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span
 <span class="nb">eval</span><span class="w"> </span><span class="si">${</span><span class="nv">runStr</span><span class="si">}</span>
 </pre></div>
 </div>
+</section>
+<section id="debug-using-interactive-shell">
+<h2>Debug using interactive shell<a class="headerlink" href="#debug-using-interactive-shell" title="Link to this heading"></a></h2>
+<p>To debug anything or execute command manually inside the image you envoke inetractive shell using the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>shell<span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">script</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">SBS_REPLAY_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">SCRDIR</span><span class="si">}</span><span class="w">  </span><span class="si">${</span><span class="nv">APPTAINER_IMAGE</span><span class="si">}</span><span class="w"> </span>bash
+</pre></div>
+</div>
+<p>Keep in mind that you set env variables for according to respective replay structure.
+Or you can create <cite>env_file.env</cite> and add the repective environment variables as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SBS_REPLAY</span><span class="o">=</span><span class="nv">$SBS_REPLAY</span>
+<span class="nv">DB_DIR</span><span class="o">=</span><span class="nv">$DB_DIR</span>
+<span class="nv">DATA_DIR</span><span class="o">=</span><span class="nv">$DATA_DIR</span>
+<span class="nv">OUT_DIR</span><span class="o">=</span><span class="nv">$OUT_DIR</span>
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="nv">$LOG_DIR</span>
+<span class="nv">ANALYZER_CONFIGPATH</span><span class="o">=</span><span class="nv">$ANALYZER_CONFIGPATH</span>
+</pre></div>
+</div>
+<p>Pass the <cite>env_file.env</cite> to the apptainer argument as <cite>–env-file env_file.env</cite></p>
 </section>
 <section id="swif2-jobs">
 <h2>swif2 jobs<a class="headerlink" href="#swif2-jobs" title="Link to this heading"></a></h2>

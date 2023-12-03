@@ -143,6 +143,14 @@ Add corresponding run_num and num_events that you want to analyze.
 
     $ bash run_nps_replay_apptainer.sh <run_num> <num_events>
 
+Debug using interactive shell
+------------------------------
+To debug anything or execute command manually inside the image you envoke inetractive shell using the following.
+
+.. code-block:: bash
+
+    $ apptainer shell --env-file output.env --bind ${DATA_DIR} --bind ${OUT_DIR} --bind ${LOG_DIR} --bind ${SCRDIR}  ${APPTAINER_IMAGE} bash
+
 swif2 jobs
 ----------
 To use the above script with swif jobs. Please replace the DATA_DIR path to following.

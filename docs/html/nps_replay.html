@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="example_replay.html">Example</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">NPS REPLAY with apptainer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-npslib-image">Building the NPSlib image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debug-using-interactive-shell">Debug using interactive shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swif2-jobs">swif2 jobs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hcswif">hcswif</a></li>
 </ul>
@@ -209,6 +210,13 @@ mkdir<span class="w"> </span>-f<span class="w"> </span><span class="si">${</span
 <p>Now in ifarm you can just to following to run a single jobs.
 Add corresponding run_num and num_events that you want to analyze.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>bash<span class="w"> </span>run_nps_replay_apptainer.sh<span class="w"> </span>&lt;run_num&gt;<span class="w"> </span>&lt;num_events&gt;
+</pre></div>
+</div>
+</section>
+<section id="debug-using-interactive-shell">
+<h2>Debug using interactive shell<a class="headerlink" href="#debug-using-interactive-shell" title="Link to this heading"></a></h2>
+<p>To debug anything or execute command manually inside the image you envoke inetractive shell using the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>shell<span class="w"> </span>--env-file<span class="w"> </span>output.env<span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">DATA_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="w"> </span>--bind<span class="w"> </span><span class="si">${</span><span class="nv">SCRDIR</span><span class="si">}</span><span class="w">  </span><span class="si">${</span><span class="nv">APPTAINER_IMAGE</span><span class="si">}</span><span class="w"> </span>bash
 </pre></div>
 </div>
 </section>

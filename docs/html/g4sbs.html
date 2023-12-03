@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>g4sbs and container &mdash; Hall A/C container 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=08e7b316"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="SBS offline and related replay" href="sbs-offline.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Hall A/C container
+              <img src="_static/JLab.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="container.html">What is Container ?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcana_container.html">Hall C Analyzer (hcana) Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_setup.html">Docker/Podman Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_setup.html">Apptainer/Singularity Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_replay.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nps_replay.html">NPS REPLAY with apptainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbs-offline.html">SBS offline and related replay</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">g4sbs and container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-g4sbs-apptainer-image">Building the g4sbs apptainer image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-in-ifarm">Running in ifarm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-in-osg">Running in OSG</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Hall A/C container</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">g4sbs and container</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/g4sbs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="g4sbs-and-container">
+<span id="sbs-offline"></span><h1>g4sbs and container<a class="headerlink" href="#g4sbs-and-container" title="Link to this heading"></a></h1>
+<p>g4sbs is simulation software for hall A SBS experiment. <a class="reference external" href="https://github.com/JeffersonLab/g4sbs">Github</a></p>
+<p>It has following dependency:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://geant4.web.cern.ch/">Geant4</a></p></li>
+<li><p><a class="reference external" href="https://root.cern/">root</a></p></li>
+</ul>
+<p>Since simulation doesn’t need inputfile (mostly), it is great candidate to be run on offsite computing center.
+But the installation of g4sbs along with its dependency can be tedious. Thus we made a container that has ready to use g4sbs in it.</p>
+<p>You can find a test container in docker hub: <a class="reference external" href="https://hub.docker.com/repository/docker/apanta123/g4sbs/general">apanta123/g4sbs:centostrypythia</a>
+Here the version of dockerhub includes Geant4 : 10.7.3 , root 6.24, pythia6, g4sbs uconn_dev branch.</p>
+<section id="building-the-g4sbs-apptainer-image">
+<h2>Building the g4sbs apptainer image<a class="headerlink" href="#building-the-g4sbs-apptainer-image" title="Link to this heading"></a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apptainer<span class="w"> </span>build<span class="w"> </span>sbs_offline.sif<span class="w"> </span>docker://apanta123/g4sbs:centostrypythia
+</pre></div>
+</div>
+<p>I have build my image with the name at “<cite>g4sbs.sif</cite>”</p>
+</section>
+<section id="running-in-ifarm">
+<h2>Running in ifarm<a class="headerlink" href="#running-in-ifarm" title="Link to this heading"></a></h2>
+<p>You can use following script with either swif2 or slurm to submit job to ifarm.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nv">BASEDIR</span><span class="o">=</span><span class="s2">&quot;/path/to/scipt/dir/&quot;</span>
+<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/path/to/apptainer/image/g4sbs.sif&quot;</span><span class="w">  </span><span class="c1"># apptainer image location</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="s2">&quot;gen_1018_example.mac&quot;</span><span class="w">  </span><span class="c1"># script should be in BASEDIR</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$BASEDIR</span>
+
+<span class="nv">output_file</span><span class="o">=</span><span class="s2">&quot;output.env&quot;</span>
+
+<span class="nv">variables</span><span class="o">=(</span>
+<span class="w">    </span><span class="s2">&quot;G4NEUTRONHPDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4NDL4.6\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4LEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4EMLOW7.13\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4LEVELGAMMADATA=\&quot;/cvmfs/geant4.cern.ch/share/data/PhotonEvaporation5.7\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4RADIOACTIVEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/RadioactiveDecay5.6\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4PARTICLEXSDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4PARTICLEXS3.1\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4PIIDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4PII1.3\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4REALSURFACEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/RealSurface2.2\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4SAIDXSDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4SAIDDATA2.0\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4ABLADATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4ABLA3.1\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4INCLDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4INCL1.0\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4ENSDFSTATEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4ENSDFSTATE2.3\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;GEANT4_DATA_DIR=\&quot;/cvmfs/geant4.cern.ch/share/data\&quot;&quot;</span>
+<span class="o">)</span>
+
+<span class="c1"># Iterate through each variable and append to the output file</span>
+<span class="k">for</span><span class="w"> </span>var<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">variables</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$var</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$output_file</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+module<span class="w"> </span>load<span class="w"> </span>apptainer
+
+<span class="nb">echo</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;------&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;g4sbs&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;------&quot;</span>
+<span class="nb">echo</span>
+<span class="nv">runStr</span><span class="o">=</span><span class="s2">&quot;apptainer exec  --env-file output.env --bind </span><span class="si">${</span><span class="nv">APPTAINER_IMAGE</span><span class="si">}</span><span class="s2"> --bind </span><span class="si">${</span><span class="nv">BASEDIR</span><span class="si">}</span><span class="s2"> --bind /cvmfs </span><span class="si">${</span><span class="nv">APPTAINER_IMAGE</span><span class="si">}</span><span class="s2"> bash -c \&quot;g4sbs </span><span class="si">${</span><span class="nv">SCRIPT</span><span class="si">}</span><span class="s2">\&quot;&quot;</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$runStr</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="running-in-osg">
+<h2>Running in OSG<a class="headerlink" href="#running-in-osg" title="Link to this heading"></a></h2>
+<p>Open Science Grid (<a class="reference external" href="https://osg-htc.org/">OSG</a>) is a distributed computing infrastructure that provides a shared pool of high-throughput computing resources to researchers across various scientific disciplines.</p>
+<p>To submit job to OSG resources, we have put the apptainer image to oasis.opensciencegrid.org  <a class="reference external" href="https://cernvm.cern.ch/fs/">cvmfs</a>.
+Location of image is: <code class="docutils literal notranslate"><span class="pre">/cvmfs/oasis.opensciencegrid.org/jlab/halla/sbs/containers/g4sbs_pythia.sif</span></code></p>
+<p>The submit node for OSg jobs is <code class="docutils literal notranslate"><span class="pre">scosg20</span></code>.</p>
+<ul class="simple">
+<li><p>You login as:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ssh<span class="w"> </span>ifarm
+$<span class="w"> </span>shh<span class="w"> </span>scosg20
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Then cd into the osgpool directory and make a directory with username. Also create other directory needed for later.</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/osgpool/halla
+$<span class="w"> </span>mkdir<span class="w"> </span><span class="nv">$USER</span>
+$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>logs<span class="w"> </span>output<span class="w"> </span>error
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Get a grid certificate of Jlab CILOGON if not done so.</p></li>
+<li><p>Make a .cilogon diretcory in scosg20 and put the usercert.pem and userkey.pem in that directory. Your directory should look like following:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w">  </span>ls<span class="w"> </span><span class="nv">$HOME</span>/.cilogon/
+usercert.pem<span class="w"> </span>userkey.pem
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a bash script to run the simulation. Name the file as <code class="docutils literal notranslate"><span class="pre">run_g4sbs.sh</span></code></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># apptainer image location</span>
+<span class="nv">APPTAINER_IMAGE</span><span class="o">=</span><span class="s2">&quot;/cvmfs/oasis.opensciencegrid.org/jlab/halla/sbs/containers/g4sbs_pythia.sif&quot;</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="s2">&quot;gen_1018_example.mac&quot;</span><span class="w">   </span><span class="c1"># script to run</span>
+
+<span class="nv">output_file</span><span class="o">=</span><span class="s2">&quot;output.env&quot;</span><span class="w">  </span><span class="c1"># Replace with your desired output file</span>
+
+<span class="nv">variables</span><span class="o">=(</span>
+<span class="w">    </span><span class="s2">&quot;G4NEUTRONHPDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4NDL4.6\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4LEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4EMLOW7.13\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4LEVELGAMMADATA=\&quot;/cvmfs/geant4.cern.ch/share/data/PhotonEvaporation5.7\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4RADIOACTIVEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/RadioactiveDecay5.6\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4PARTICLEXSDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4PARTICLEXS3.1\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4PIIDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4PII1.3\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4REALSURFACEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/RealSurface2.2\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4SAIDXSDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4SAIDDATA2.0\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4ABLADATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4ABLA3.1\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4INCLDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4INCL1.0\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;G4ENSDFSTATEDATA=\&quot;/cvmfs/geant4.cern.ch/share/data/G4ENSDFSTATE2.3\&quot;&quot;</span>
+<span class="w">    </span><span class="s2">&quot;GEANT4_DATA_DIR=\&quot;/cvmfs/geant4.cern.ch/share/data\&quot;&quot;</span>
+<span class="o">)</span>
+
+<span class="k">for</span><span class="w"> </span>var<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">variables</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$var</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$output_file</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+
+<span class="nb">echo</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;------&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;g4sbs&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;------&quot;</span>
+<span class="nb">echo</span>
+<span class="nb">export</span><span class="w"> </span><span class="k">$(</span>xargs<span class="w"> </span>&lt;<span class="w"> </span>output.env<span class="k">)</span>
+<span class="nv">runStr</span><span class="o">=</span><span class="s2">&quot;g4sbs </span><span class="si">${</span><span class="nv">SCRIPT</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$runStr</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Before submitting job you need to has x509 proxy. Use voms command to generate proxy.</p>
+<blockquote>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>voms-proxy-init<span class="w"> </span>--cert<span class="w"> </span><span class="nv">$HOME</span>/.cilogon/usercert.pem<span class="w"> </span>--key<span class="w"> </span><span class="nv">$HOME</span>/.cilogon/userkey.pem<span class="w"> </span>--hours<span class="w"> </span><span class="m">24</span>
+</pre></div>
+</div>
+<p>You will get a proxy file in <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> directory starting with <code class="docutils literal notranslate"><span class="pre">x509up_</span></code>.</p>
+</div></blockquote>
+</li>
+<li><p>Create a submit file for OSG submission and name it as <code class="docutils literal notranslate"><span class="pre">OSG.sub</span></code></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">executable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>run_g4sbs.sh
+<span class="nv">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>output/stdout.<span class="k">$(</span>PROCESS<span class="k">)</span>
+<span class="nv">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>error/stderr.<span class="k">$(</span>PROCESS<span class="k">)</span>
+<span class="nv">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>logs/stdlog<span class="k">$(</span>PROCESS<span class="k">)</span>.log
+<span class="nv">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>never
+<span class="nv">universe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>vanilla
+<span class="nv">should_transfer_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>yes
+<span class="nv">x509userproxy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/tmp/x509up_uxxxxx<span class="w">  </span><span class="c1"># replace me with actual name</span>
+<span class="nv">transfer_input_files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>gen_1018_example.mac<span class="w">  </span><span class="c1"># your .mac script to run</span>
+<span class="nv">WhenToTransferOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ON_EXIT
+<span class="nv">on_exit_remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="nv">ExitBySignal</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>False<span class="o">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">(</span><span class="nv">ExitCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>
+<span class="nv">on_exit_remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="nv">RequestCPUs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="nv">Requirements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">HAS_SINGULARITY</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>True
++SingularityImage<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;/cvmfs/oasis.opensciencegrid.org/jlab/halla/sbs/containers/g4sbs_pythia.sif&quot;</span>
++SingularityBindCVMFS<span class="w"> </span><span class="o">=</span><span class="w"> </span>True
+</pre></div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>submit the job</dt><dd><p>Use <code class="docutils literal notranslate"><span class="pre">condor_submit</span></code> to submit the job.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>condor_submit<span class="w"> </span>osg.sub
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To check the job status</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sbs-offline.html" class="btn btn-neutral float-left" title="SBS offline and related replay" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Anil.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

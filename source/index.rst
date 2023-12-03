@@ -17,6 +17,7 @@ Welcome to Hall A/C container's documentation!
    example_replay
    nps_replay
    sbs-offline
+   g4sbs
   
 
 

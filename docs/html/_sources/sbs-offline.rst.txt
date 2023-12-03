@@ -72,6 +72,27 @@ To make it work with you, please change the paths in "modify as you need" part o
         ${APPTAINER_IMAGE} bash -c \"cd $SBS/run_replay_here/ && analyzer -b -q ${script}+\(${runnum},${maxevents}\)\"" #,${firstevent}\)\"",${prefix},${firstsegment},${maxsegments}\)\""
     eval ${runStr}
 
+Debug using interactive shell
+------------------------------
+To debug anything or execute command manually inside the image you envoke inetractive shell using the following.
+
+.. code-block:: bash
+
+    $ apptainer shell --bind ${script} --bind ${SBS_REPLAY_DIR} --bind ${DATA_DIR} --bind ${OUT_DIR} --bind ${LOG_DIR} --bind ${SCRDIR}  ${APPTAINER_IMAGE} bash
+
+Keep in mind that you set env variables for according to respective replay structure.
+Or you can create `env_file.env` and add the repective environment variables as: 
+
+.. code-block:: bash
+
+    SBS_REPLAY=$SBS_REPLAY
+    DB_DIR=$DB_DIR
+    DATA_DIR=$DATA_DIR
+    OUT_DIR=$OUT_DIR
+    LOG_DIR=$LOG_DIR
+    ANALYZER_CONFIGPATH=$ANALYZER_CONFIGPATH
+
+Pass the `env_file.env` to the apptainer argument as `--env-file env_file.env`
 
 swif2 jobs
 ----------
